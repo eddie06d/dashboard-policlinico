@@ -1,0 +1,57 @@
+<input type="checkbox" name="" id="sidebar_toggle">
+<div class="sidebar_own">
+  <div class="sidebar_brand">
+    <div class="brand_flex">
+      <img src="assets/logo_policlinico.png" width="230" alt="img-user">
+    </div>
+  </div>
+  <div class="sidebar_main">
+    <div class="sidebar_menu">
+      <div class="menu_head">
+        <span>Dashboard</span>
+      </div>
+      <ul>
+        <li>
+          <a routerLink="/">
+            <i class="fa-solid fa-house"></i>Inicio
+          </a>
+        </li>
+        <li>
+          <a routerLink="especialidades">
+            <i class="fa-solid fa-house-medical-circle-check"></i>Gestión especialidades
+          </a>
+        </li>
+        <li>
+          <a routerLink="usuarios">
+            <i class="fa-solid fa-user-group"></i>Gestión usuarios
+          </a>
+        </li>
+        <li>
+          <a routerLink="citas">
+            <i class="fa-solid fa-hospital-user"></i>Gestión citas
+          </a>
+        </li>
+        <li>
+          <a routerLink="medicos">
+            <i class="fa-solid fa-user-doctor"></i>Gestión médicos
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="main_content">
+  <header>
+    <div class="menu_toggle">
+      <label for="sidebar_toggle">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+    </div>
+    <div class="header_icons d-flex gap-4">
+      <i class="fa-solid fa-magnifying-glass fa-2x"></i>
+      <i class="fa-solid fa-bookmark fa-2x"></i>
+      <i class="fa-solid fa-comment fa-2x"></i>
+    </div>
+  </header>
+  <router-outlet></router-outlet>
+</div>

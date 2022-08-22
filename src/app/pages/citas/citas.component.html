@@ -1,0 +1,105 @@
+<main>
+  <div class="container">
+    <h1 class="text-center">{{ title }}</h1>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        placeholder="Buscar por nombre"
+        (input)="search($event)"
+        aria-label="Buscar"
+        aria-describedby="basic-addon1"
+      >
+    </div>
+    <ng-container *ngIf="citasFilter.length == 0; else resultsFound">
+      <div class="d-flex flex-column align-items-center mt-5">
+        <img src="assets/no-data.svg" style="height: 200px;" alt="no-results-found" />
+        <h3>No se encontraron resultados</h3>
+      </div>
+    </ng-container>
+    <ng-template #resultsFound>
+      <table class="table table-striped">
+        <thead class="text-center">
+          <th>Nro</th>
+          <th>Correo paciente</th>
+          <th>Estado</th>
+          <th>Detalles</th>
+          <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cita of citasFilter; let i=index">
+            <td class="text-center">{{ i+1 }}</td>
+            <td class="text-center">{{ cita.correo }}</td>
+            <td class="text-center">
+              <ng-container *ngIf="cita.atendido; else elseTemplate">
+                <span class="badge bg-success">ATENDIDO</span>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <span class="badge bg-danger">NO ATENDIDO</span>
+              </ng-template>
+            </td>
+            <td>
+              <button
+                class="btn btn-secondary mx-auto"
+                data-bs-toggle="modal"
+                data-bs-target="#modalViewDetails"
+                (click)="verDetalles(cita)"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                Ver Detalles
+              </button>
+            </td>
+            <td class="d-flex justify-content-center gap-2">
+              <button *ngIf="!cita.atendido"
+              class="btn btn-info"
+              data-bs-toggle="modal"
+              data-bs-target="#modalUpdate"
+              (click)="actualizarCita(cita)"
+              >
+                <i class="fa-solid fa-pen-to-square"></i>
+                Atender
+              </button>
+              <button class="btn btn-danger" (click)="eliminarCita(cita)">
+                <i class="fa-solid fa-trash-can"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </div>
+</main>
+
+<!-- Modal View Details -->
+<div class="modal fade" id="modalViewDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Cita del paciente {{ cita?.correo }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Médico</label>
+          <input type="text" class="form-control" [value]="cita?.medico" readonly>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Especialidad</label>
+          <input type="text" class="form-control" [value]="cita?.especialidad" readonly>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Fecha</label>
+          <input type="text" class="form-control" value="{{cita?.fecha.day + ' - ' + cita?.fecha.month + ' - ' + cita?.fecha.year}}" readonly>
+        </div>
+        <div>
+          <label class="form-label">Hora</label>
+          <input type="text" class="form-control" [value]="cita?.hora" readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

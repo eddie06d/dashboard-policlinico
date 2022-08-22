@@ -1,0 +1,133 @@
+<main>
+  <div class="page-header">
+    <div>
+      <h1>Dashboard Principal</h1>
+      <small>Métricas clave. Revisar reportes y apuntes</small>
+    </div>
+    <div class="header-actions">
+      <button>
+        <i class="fa-solid fa-file-export"></i>Export
+      </button>
+      <button>
+        <i class="fa-solid fa-screwdriver-wrench"></i>Settings
+      </button>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card-single">
+      <div class="card-flex">
+        <div class="card-info">
+          <div class="card-head">
+            <span>Citas</span>
+            <small>Número de citas</small>
+          </div>
+          <h2> 763</h2>
+          <small>2% menos registradas</small>
+        </div>
+        <div class="card-chart danger">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+      </div>
+    </div>
+    <div class="card-single">
+      <div class="card-flex">
+        <div class="card-info">
+          <div class="card-head">
+            <span>Médicos</span>
+            <small>Número de médicos</small>
+          </div>
+          <h2>223</h2>
+          <small>10% menos registrados</small>
+        </div>
+        <div class="card-chart success">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+      </div>
+    </div>
+    <div class="card-single">
+      <div class="card-flex">
+        <div class="card-info">
+          <div class="card-head">
+            <span>Visitas a la página</span>
+            <small>Número de visitas</small>
+          </div>
+          <h2>9,085</h2>
+          <small>12% menos visitantes</small>
+        </div>
+        <div class="card-chart yellow">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRAFICAS  -->
+  <h2 style="margin-top: 1.3em;">Gráficos Estadísticos</h2>
+  <div class="zone-graphic">
+    <div class="chart">
+      <div>
+        <h4>Distribución de citas por estado de atención</h4>
+        <ngx-charts-pie-chart
+        [view]="[700, 400]"
+        [results]="dataCitasByState"
+        [gradient]="gradient"
+        [scheme]="colorScheme"
+        [legend]="showLegend"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+        >
+      </ngx-charts-pie-chart>
+      </div>
+    </div>
+    <div class="chart">
+      <h4>Distribución de citas por especialidad</h4>
+      <ngx-charts-bar-vertical
+        [view]="[700,400]"
+        [scheme]="colorScheme"
+        [results]="dataCitasBySpecialty"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelectVerticalChart($event)">
+      </ngx-charts-bar-vertical>
+    </div>
+    <div class="chart">
+      <h4>Distribución de médicos por especialidad</h4>
+      <ngx-charts-pie-chart
+        [view]="[700, 400]"
+        [results]="data"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+        >
+      </ngx-charts-pie-chart>
+    </div>
+    <div class="chart">
+      <h4>Distribución de usuarios por distrito</h4>
+      <ngx-charts-pie-chart
+        [view]="[700, 400]"
+        [results]="dataUsers"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+        (select)="onSelect($event)"
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate($event)"
+        >
+      </ngx-charts-pie-chart>
+    </div>
+  </div>
+</main>

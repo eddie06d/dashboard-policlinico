@@ -1,0 +1,183 @@
+<main>
+  <div class="container">
+    <h1 class="text-center">{{ title }}</h1>
+    <button
+      class="btn btn-primary btn-lg my-3"
+      data-bs-toggle="modal"
+      data-bs-target="#modalCreate"
+    >
+      <i class="fa-solid fa-plus"></i>
+      Crear Usuario
+    </button>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </span>
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        placeholder="Buscar por correo"
+        (input)="search($event)"
+        aria-label="Buscar"
+        aria-describedby="basic-addon1"
+      >
+    </div>
+    <ng-container *ngIf="usersFilter.length == 0; else resultsFound">
+      <div class="d-flex flex-column align-items-center mt-5">
+        <img src="assets/no-data.svg" style="height: 200px;" alt="no-results-found" />
+        <h3>No se encontraron resultados</h3>
+      </div>
+    </ng-container>
+    <ng-template #resultsFound>
+      <table class="table table-striped">
+        <thead class="text-center">
+          <th>Nro</th>
+          <th>Correo</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Acciones</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of usersFilter; let i=index">
+            <td class="text-center">{{ i+1 }}</td>
+            <td class="text-center">{{ user.correo }}</td>
+            <td class="text-center">{{ user.nombres }}</td>
+            <td class="text-center">{{ user.apellidos }}</td>
+            <td class="d-flex justify-content-center gap-2">
+              <button
+              class="btn btn-info"
+              data-bs-toggle="modal"
+              data-bs-target="#modalUpdate"
+              (click)="actualizarUsuario(user)"
+              >
+                <i class="fa-solid fa-pen-to-square"></i>
+                Actualizar
+              </button>
+              <button class="btn btn-danger" (click)="eliminarUsuario(user)">
+                <i class="fa-solid fa-trash-can"></i>
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-template>
+  </div>
+</main>
+
+<!-- Modal Create -->
+<div class="modal fade" id="modalCreate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Crear nueva usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btnCloseCreate"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="correo"
+              placeholder="Escriba su correo"
+            >
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombres</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nombres"
+              placeholder="Escriba sus nombres"
+            >
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Apellidos</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="apellidos"
+              placeholder="Escriba sus apellidos"
+            >
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Distrito</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="distrito"
+              placeholder="Escriba su distrito"
+            >
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary float-end"
+            [disabled]="!form.valid"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Update -->
+<div class="modal fade" id="modalUpdate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Actualizar Usuario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btnCloseUpdate"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formUpdate" (ngSubmit)="onSubmitUpdate()">
+          <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="correoUp"
+            >
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombres</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="nombresUp"
+              placeholder="Escriba sus nombres"
+            >
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Apellidos</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="apellidosUp"
+              placeholder="Escriba sus apellidos"
+            >
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Distrito</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="distritoUp"
+              placeholder="Escriba su distrito"
+            >
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary float-end"
+            [disabled]="!formUpdate.valid"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
